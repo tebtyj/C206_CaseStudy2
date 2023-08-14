@@ -11,7 +11,9 @@ public class C206_CaseStudy {
 		ArrayList<User> userList = new ArrayList<User>();
 		
 		User u1 =  new User("admin","admin@gmail.com","admin1","admin");
+		User u2 = new User ("john","john@gmail.com","john123","teacher");
 		userList.add(u1);
+		userList.add(u2);
 		
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
@@ -65,7 +67,54 @@ public class C206_CaseStudy {
 	}
 	//================================= Option 2 Login Teacher =================================
 	private static void LoginTeacher(ArrayList<User> userList) {
-		//enter code here
+		// enter code here //kokzhen
+				Scanner scanner = new Scanner(System.in);
+				
+				String username, password;
+				
+				System.out.println("Enter your username: ");
+				username = scanner.nextLine();
+				System.out.println("Enter your password: ");
+				password = scanner.nextLine();
+				
+				for (User user : userList) {
+					if (user.getUsername().equals(username) && user.getPassword().equals(password)
+							&& user.getRole().equalsIgnoreCase("teacher")) {
+						System.out.println("\nWelcome," + username +"\n");
+						teacherMenu();
+						
+					}
+				}
+	}
+	private static void teacherMenu() {
+		System.out.println();
+		Helper.line(45, "*");
+		System.out.println("*****     TEACHER MENU     *****");
+		Helper.line(45, "*");
+		
+		Scanner scanner = new Scanner(System.in);
+		int choice = 0;
+		while (choice != 3) {
+			System.out.println("1.Manage Activities");
+			System.out.println("2.Manage Registration");
+			System.out.println("3.Logout");
+			
+			System.out.println("Enter your choice: ");
+			
+			choice = scanner.nextInt();
+			
+			switch (choice) {
+			case 1:
+				manageActivities(); //xinying
+				break;
+			case 2:
+				manageRegistration(); //rach
+				break;
+			case 3:
+				System.out.println("Logging out the system");
+				break;
+			}
+		}
 	}
 	//================================= Option 3 Login Student =================================
 	private static void LoginStudent(ArrayList<User> userList) {

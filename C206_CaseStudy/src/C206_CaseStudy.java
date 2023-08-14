@@ -225,6 +225,86 @@ public class C206_CaseStudy {
 	}
 	//================================= Option 4 Manage Registration (Admin) =================================
 	public static void manageRegistration() { // Rach
-		//enter code here
+			  //enter code here
+			   System.out.println();
+			   Helper.line(45, "*");
+			   System.out.println("***     MANAGE REGISTRATION     ***");
+			   Helper.line(45, "*");
+			   ArrayList<registration> registrationList = new ArrayList<registration>();
+			   Scanner scanner = new Scanner(System.in);
+			   int choice = 0;
+			   while (choice != 5) {
+			    System.out.println("1.Add a registration");
+			    System.out.println("2.View All registrations");
+			    System.out.println("3.Delete an existing registration");
+			    System.out.println("4.Exit");
+
+			    System.out.println("Enter your choice: ");
+
+			    choice = scanner.nextInt();
+
+			    switch (choice) {
+			    case 1:
+			     addRegistration(registrationList);
+			     break;
+			    case 2:
+			     viewAllRegistration(registrationList);
+			     break;
+			    case 3:
+			     deleteRegistration(registrationList);
+			     break;
+			    default:
+			     System.out.println("Logging out the system..");
+			     ;
+			    }
+			   }
+			  }
+			 //a
+			     //add registration
+			  public static void addRegistration(ArrayList<registration> registrationList) {
+			   Helper.line(35, "=");
+			   System.out.println("==== Add Registration ====");
+			   Helper.line(35, "=");
+			   String entName = Helper.readString("Enter Name > ");
+			   String entClass = Helper.readString("Enter Class > ");
+			   String entEmail = Helper.readString("Enter Email > ");
+			   
+			   //insert into registrations
+			   
+			   //exit
+			   System.out.println("==== Registration Successful ====");
+			   Helper.line(10, " ");
+			   
+			  }
+			  
+			  //view all registrations
+			  public static void viewAllRegistration(ArrayList<registration> registrationList) {
+			   Helper.line(35, "=");
+			   System.out.println("==== VIew All Registration ====");
+			   Helper.line(35, "=");
+			  
+			   for (int i=0;i<registrationList.size();i++) {
+			    String name=registrationList.get(i).getName();
+			    String classroom=registrationList.get(i).getClassroom();
+			    String email=registrationList.get(i).getEmail();
+			    //title+=String.format("%-10s %-15s %-10s\n",name,classroom,email);
+			    }
+			   
+			  }
+			  
+			  //delete registration
+			  public static void deleteRegistration(ArrayList<registration> registrationList) {
+			   Helper.line(35, "=");
+			   System.out.println("==== Delete Registration ====");
+			   Helper.line(35, "=");
+			   String entName = Helper.readString("Enter Name > ");
+			   
+			   //delete entered name from registrations
+			   
+			   
+			   //exit
+			   System.out.println("==== Registration Deleted ====");
+			   
+			}
 	}
 } // end line (admin)

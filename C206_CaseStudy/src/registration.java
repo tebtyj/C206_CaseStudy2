@@ -1,29 +1,31 @@
 
 public class registration {
 	String name;
-	String classroom;
+	String userId;
 	String email;
+	String CCAc;
 	
-	public void Registration(String name, String classroom, String email) {
+	public registration(String name, String userId, String email,String CCAc) {
 		this.name=name;
-		this.classroom=classroom;
+		this.userId=userId;
 		this.email=email;
+		this.CCAc=CCAc;
 	}
 	
 	public String getName() {
 		return name;
 		
-	}public String getClassroom() {
-		return classroom;
+	}public String getUserId() {
+		return userId;
 		
 	}public String getEmail() {
 		return email;
-		
-	}public void setName(String username) {
-		this.name=name;
-		
-	}public void setClassroom(String classroom) {
-		this.classroom=classroom;
+	}
+	public String getCCAc() {
+		return CCAc;
+	}
+	public void setName(String name) {
+		this.name = name;
 		
 	}public void setEmail(String email) {
 		this.email=email;

@@ -6,15 +6,37 @@ public class C206_CaseStudy {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		//initialise User array with user objects 
+
+		// initialise User array with user objects
 		ArrayList<User> userList = new ArrayList<User>();
-		
-		User u1 =  new User("admin","admin@gmail.com","admin1","admin");
-		User u2 = new User ("john","john@gmail.com","john123","teacher");
+		ArrayList<registration> registrationList = new ArrayList<registration>();
+		ArrayList<Activity> activityList = new ArrayList<Activity>();
+		// default user list
+		User u1 = new User("A123", "admin", "admin@gmail.com", "admin1", "admin");
+		User u2 = new User("T123", "john", "john@gmail.com", "john123", "teacher");
+		User u3 = new User("S123", "William Lee", "WillL@gmail.com", "william", "student");
 		userList.add(u1);
 		userList.add(u2);
-		
+		userList.add(u3);
+		// default registration list
+		registration r1 = new registration("William", "S123", "WillL@gmail.com", "Badminton");
+		// default activity list
+		Activity a1 = new Activity("Badminton", "Badminton is a racket sport that is played by two or four players.",
+				"Maximum capacity: 40");
+		Activity a2 = new Activity("Soccer",
+				"Soccer is a team sport, involving 11 players on each side who use their legs, head and torso to pass a ball and score goals.",
+				"Maximum capacity: 40");
+		Activity a3 = new Activity("Basketball",
+				"Basketball is a team sport that involves two teams of five active players each trying to score points against one another",
+				"Maximum capacity: 40");
+		Activity a4 = new Activity("Rugby",
+				"Rugby is a football game played with an oval ball by two teams of 15 players (in rugby union play) or 13 players (in rugby league play).",
+				"Maximum capacity: 40");
+		activityList.add(a1);
+		activityList.add(a2);
+		activityList.add(a3);
+		activityList.add(a4);
+		registrationList.add(r1);
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
 		while (choice != 4) {
@@ -29,24 +51,27 @@ public class C206_CaseStudy {
 
 			switch (choice) {
 			case 1:
-				LoginAdmin(userList);
+				LoginAdmin(userList, registrationList, activityList);
 				break;
 			case 2:
-				LoginTeacher(userList);
+				LoginTeacher(userList, registrationList, activityList);
 				break;
 			case 3:
-				LoginStudent(userList);
+				LoginStudent(userList, registrationList, activityList);
 				break;
 			case 4:
-				System.out.println("Exiting the system..");
+				System.out.println("Exiting the system. Bye!");
 				break;
 			default:
 				System.out.println("Invalid Choice, Please try again");
 			}
 		}
 	}
-	//================================= Option 1 Login Admin =================================
-	private static void LoginAdmin(ArrayList<User> userList) {
+
+	// ================================= Option 1 Login Admin
+	// =================================
+	private static void LoginAdmin(ArrayList<User> userList, ArrayList<registration> registrationList,
+			ArrayList<Activity> activityList) {
 		Scanner scanner = new Scanner(System.in);
 
 		String username, password;
@@ -60,55 +85,61 @@ public class C206_CaseStudy {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)
 					&& user.getRole().equalsIgnoreCase("admin")) {
 				System.out.println("\nWelcome, Admin\n");
-				adminMenu();
+				adminMenu(userList, registrationList, activityList);
 				break;
+			} else {
+				System.out.println("Wrong Username/Password. Try Again.");
 			}
 		}
 	}
-	//================================= Option 2 Login Teacher =================================
-	private static void LoginTeacher(ArrayList<User> userList) {
+
+	// ================================= Option 2 Login Teacher
+	// =================================
+	private static void LoginTeacher(ArrayList<User> userList, ArrayList<registration> registrationList,
+			ArrayList<Activity> activityList) {
 		// enter code here //kokzhen
-				Scanner scanner = new Scanner(System.in);
-				
-				String username, password;
-				
-				System.out.println("Enter your username: ");
-				username = scanner.nextLine();
-				System.out.println("Enter your password: ");
-				password = scanner.nextLine();
-				
-				for (User user : userList) {
-					if (user.getUsername().equals(username) && user.getPassword().equals(password)
-							&& user.getRole().equalsIgnoreCase("teacher")) {
-						System.out.println("\nWelcome," + username +"\n");
-						teacherMenu();
-						
-					}
-				}
+		Scanner scanner = new Scanner(System.in);
+
+		String username, password;
+
+		System.out.println("Enter your username: ");
+		username = scanner.nextLine();
+		System.out.println("Enter your password: ");
+		password = scanner.nextLine();
+
+		for (User user : userList) {
+			if (user.getUsername().equals(username) && user.getPassword().equals(password)
+					&& user.getRole().equalsIgnoreCase("teacher")) {
+				System.out.println("\nWelcome," + username + "\n");
+				teacherMenu(registrationList, activityList);
+
+			}
+		}
 	}
-	private static void teacherMenu() {
+
+	private static void teacherMenu(ArrayList<registration> registrationList, ArrayList<Activity> activityList) {
 		System.out.println();
 		Helper.line(45, "*");
 		System.out.println("*****     TEACHER MENU     *****");
 		Helper.line(45, "*");
-		
+
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
 		while (choice != 3) {
 			System.out.println("1.Manage Activities");
 			System.out.println("2.Manage Registration");
 			System.out.println("3.Logout");
-			
+
 			System.out.println("Enter your choice: ");
-			
+
 			choice = scanner.nextInt();
-			
+
 			switch (choice) {
 			case 1:
-				manageActivities(); //xinying
+				manageActivities(activityList); // xinying
 				break;
 			case 2:
-				manageRegistration(); //rach
+				manageRegistration(registrationList); // rach
 				break;
 			case 3:
 				System.out.println("Logging out the system");
@@ -116,12 +147,34 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-	//================================= Option 3 Login Student =================================
-	private static void LoginStudent(ArrayList<User> userList) {
-		//enter code here
+
+	// ================================= Option 3 Login Student
+	// =================================
+	private static void LoginStudent(ArrayList<User> userList, ArrayList<registration> registrationList,
+			ArrayList<Activity> activityList) { // tebbie
+		Scanner scanner = new Scanner(System.in);
+
+		String username, password;
+
+		System.out.println("Enter your username: ");
+		username = scanner.nextLine();
+		System.out.println("Enter your password: ");
+		password = scanner.nextLine();
+
+		for (User user : userList) {
+			if (user.getUsername().equals(username) && user.getPassword().equals(password)
+					&& user.getRole().equalsIgnoreCase("student")) {
+				System.out.println("\nWelcome, Student\n");
+				studentMenu(registrationList, activityList);
+				break;
+			} else {
+				System.out.println("Wrong Username/Password. Try Again.\n");
+			}
+		}
 	}
 
-	private static void adminMenu() {
+	private static void adminMenu(ArrayList<User> userList, ArrayList<registration> registrationList,
+			ArrayList<Activity> activityList) {
 		System.out.println();
 		Helper.line(45, "*");
 		System.out.println("*****     ADMIN  MENU     *****");
@@ -142,16 +195,16 @@ public class C206_CaseStudy {
 
 			switch (choice) {
 			case 1:
-				manageUserAcc(); // tebbie
+				manageUserAcc(userList); // tebbie
 				break;
 			case 2:
-				manageUserRoles();
+				manageUserRoles(); // tebbie
 				break;
 			case 3:
-				manageActivities(); // xinying
+				manageActivities(activityList); // xinying
 				break;
 			case 4:
-				manageRegistration(); // rach
+				manageRegistration(registrationList); // rach
 				break;
 			default:
 				System.out.println("Logging out the system..");
@@ -159,16 +212,18 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-	//================================= Option 1 Manage User (Admin) =================================
-	public static void manageUserAcc() { // tebbie
+
+	// ================================= Option 1 Manage User (Admin)
+	// =================================
+	public static void manageUserAcc(ArrayList<User> userList) { // tebbie
 		System.out.println();
 		Helper.line(45, "*");
 		System.out.println("*****     MANAGE USER ACCOUNT     *****");
 		Helper.line(45, "*");
-		ArrayList<User> userList = new ArrayList<User>();
+
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
-		while (choice != 5) {
+		while (choice != 4) {
 			System.out.println("1.Add a new user");
 			System.out.println("2.View All users");
 			System.out.println("3.Delete an existing user");
@@ -180,131 +235,360 @@ public class C206_CaseStudy {
 
 			switch (choice) {
 			case 1:
-				addUser(userList); 
+				addUser(userList);
 				break;
 			case 2:
 				viewAllUser(userList);
 				break;
 			case 3:
-				deleteUser(userList); 
+				deleteUser(userList);
+				break;
+			case 4:
+				System.out.println("Exiting the system..");
 				break;
 			default:
-				System.out.println("Logging out the system..");
+				System.out.println("Invalid choice, try again.");
 				break;
 			}
 		}
 	}
+
 	public static void addUser(ArrayList<User> userList) {
+
 		System.out.println("==== Add User ====");
 		String entUsername = Helper.readString("Enter username > ");
+		String entId = Helper.readString("Enter user Id > ");
 		String entPass = Helper.readString("Enter password > ");
 		String entEmail = Helper.readString("Enter Email > ");
 		String entRole = Helper.readString("Enter user role > ");
-		
-		for (int i = 0;i<userList.size();i++) {
-			if(userList.get(i).getRole().equalsIgnoreCase(entRole)) {
-//				if(userList.get(i).getUsername(entUsername)) {
-//					
-//				}
+
+		boolean nameFound = false;
+		int listSize = userList.size();
+		for (int i = 0; i < listSize; i++) {
+			if (userList.get(i).getUsername().equalsIgnoreCase(entUsername)) {
+				nameFound = true;
+				System.out.println("*** User has already been added ***");
+			}
+		}
+
+		if (nameFound == false) {
+			User newuser = new User(entId, entUsername, entEmail, entPass, entRole);
+			userList.add(newuser);
+			newuser.display();
+			System.out.printf("*** User '%s' has been added! ***\n", entUsername);
+		}
+
+	}
+
+	public static void viewAllUser(ArrayList<User> userList) {
+		System.out.println("==== View Users ====");
+		String output = String.format("%-15s %-15s %-20s %-30s \n", "USERNAME", "USER ID", "EMAIL", "ROLE");
+		output += retrieveUser(userList);
+		System.out.println(output);
+	}
+
+	public static String retrieveUser(ArrayList<User> userList) {
+		String output = "";
+		// write your code here
+		for (int i = 0; i < userList.size(); i++) {
+			output += String.format("%-15s %-15s %-20s %-30s \n", userList.get(i).getUsername(),
+					userList.get(i).getUserId(), userList.get(i).getEmail(), userList.get(i).getRole());
+		}
+		return output;
+	}
+
+	public static void deleteUser(ArrayList<User> userList) {
+		String removeUser = Helper.readString("Enter user Id to remove > ");
+		// Find the user to be deleted.
+		boolean userFound = false;
+		for (int i = 0; i < userList.size(); i++) {
+			if (userList.get(i).getUserId().equalsIgnoreCase(removeUser)) {
+				userList.remove(i);
+				userFound = true;
+				break;
+			}
+		}
+
+		// If the user was found,display message
+		if (userFound == true) {
+			System.out.println("User has been removed successfully!");
+		} else {
+			System.out.println("There is no such user.");
+		}
+	}
+
+	// ================================= Option 2 Manage UserRoles (Admin)
+	// =================================
+	public static void manageUserRoles() { // tebbie
+		// enter code here
+	}
+
+	// ================================= Option 3 Manage Activites (Admin)
+	// =================================
+	public static void manageActivities(ArrayList<Activity> activityList) { // xinying
+		// enter code here
+		System.out.println();
+		Helper.line(45, "*");
+		System.out.println("*     MANAGE ACTIVITIES     *");
+		Helper.line(45, "*");
+		int choice = 0;
+		while (choice != 4) {
+			System.out.println("1.Add an activity");
+			System.out.println("2.View All activities");
+			System.out.println("3.Delete an existing activity");
+			System.out.println("4.Exit");
+
+			choice = Helper.readInt("Enter your choice: ");
+
+			switch (choice) {
+			case 1:
+				Activity newActivity = inputActivity();
+				addActivity(activityList, newActivity);
+				break;
+			case 2:
+				viewAllActivities(activityList);
+				break;
+			case 3:
+				deleteActivity(activityList);
+				break;
+			default:
+				System.out.println("Logging out the system..");
+				;
 			}
 		}
 	}
-	public static void viewAllUser(ArrayList<User> userList) {
-		//ent code
-	}
-	public static void deleteUser(ArrayList<User> userList) {
-		//enter code
-	}
-	//================================= Option 2 Manage UserRoles (Admin) =================================
-	public static void manageUserRoles() { // any1
-		//enter code here
-	}
-	//================================= Option 3 Manage Activites (Admin) =================================
-	public static void manageActivities() { // xinying
-		//enter code here
-	}
-	//================================= Option 4 Manage Registration (Admin) =================================
-	public static void manageRegistration() { // Rach
-			  //enter code here
-			   System.out.println();
-			   Helper.line(45, "*");
-			   System.out.println("***     MANAGE REGISTRATION     ***");
-			   Helper.line(45, "*");
-			   ArrayList<registration> registrationList = new ArrayList<registration>();
-			   Scanner scanner = new Scanner(System.in);
-			   int choice = 0;
-			   while (choice != 5) {
-			    System.out.println("1.Add a registration");
-			    System.out.println("2.View All registrations");
-			    System.out.println("3.Delete an existing registration");
-			    System.out.println("4.Exit");
 
-			    System.out.println("Enter your choice: ");
+	public static Activity inputActivity() {
+		Helper.line(35, "=");
+		System.out.println("==== Add Activity ====");
+		Helper.line(35, "=");
+		String activityName = Helper.readString("Enter Activity Name > ");
+		String activityDescription = Helper.readString("Enter Activity Description > ");
+		String activityRequirement = Helper.readString("Enter Activity Requirement > ");
 
-			    choice = scanner.nextInt();
+		Activity newA = new Activity(activityName, activityDescription, activityRequirement);
+		return newA;
+	}
 
-			    switch (choice) {
-			    case 1:
-			     addRegistration(registrationList);
-			     break;
-			    case 2:
-			     viewAllRegistration(registrationList);
-			     break;
-			    case 3:
-			     deleteRegistration(registrationList);
-			     break;
-			    default:
-			     System.out.println("Logging out the system..");
-			     ;
-			    }
-			   }
-			  }
-			 //a
-			     //add registration
-			  public static void addRegistration(ArrayList<registration> registrationList) {
-			   Helper.line(35, "=");
-			   System.out.println("==== Add Registration ====");
-			   Helper.line(35, "=");
-			   String entName = Helper.readString("Enter Name > ");
-			   String entClass = Helper.readString("Enter Class > ");
-			   String entEmail = Helper.readString("Enter Email > ");
-			   
-			   //insert into registrations
-			   
-			   //exit
-			   System.out.println("==== Registration Successful ====");
-			   Helper.line(10, " ");
-			   
-			  }
-			  
-			  //view all registrations
-			  public static void viewAllRegistration(ArrayList<registration> registrationList) {
-			   Helper.line(35, "=");
-			   System.out.println("==== VIew All Registration ====");
-			   Helper.line(35, "=");
-			  
-			   for (int i=0;i<registrationList.size();i++) {
-			    String name=registrationList.get(i).getName();
-			    String classroom=registrationList.get(i).getClassroom();
-			    String email=registrationList.get(i).getEmail();
-			    //title+=String.format("%-10s %-15s %-10s\n",name,classroom,email);
-			    }
-			   
-			  }
-			  
-			  //delete registration
-			  public static void deleteRegistration(ArrayList<registration> registrationList) {
-			   Helper.line(35, "=");
-			   System.out.println("==== Delete Registration ====");
-			   Helper.line(35, "=");
-			   String entName = Helper.readString("Enter Name > ");
-			   
-			   //delete entered name from registrations
-			   
-			   
-			   //exit
-			   System.out.println("==== Registration Deleted ====");
-			   
+	// add activity
+	public static void addActivity(ArrayList<Activity> activityList, Activity newA) {
+		Activity item;
+		for (int i = 0; i < activityList.size(); i++) {
+			item = activityList.get(i);
+			if (item.getActivityName().equals(newA.getActivityName()))
+				return;
+		}
+		if ((newA.getActivityRequirement().isEmpty()) || (newA.getActivityName().isEmpty())) {
+			return;
+		}
+		activityList.add(newA);
+		System.out.println("Registration added successfully!");
+	}
+
+	// view all activities
+	public static void viewAllActivities(ArrayList<Activity> activityList) {
+		System.out.println("==== View ALL ACTIVITIES ====");
+		String output = String.format("%-15s %-15s %-15s\n", "ACTIVITY", "DESCRIPTION", "REQUIREMENT");
+		output += retrieveActivity(activityList);
+		System.out.println(output);
+	}
+
+	public static String retrieveActivity(ArrayList<Activity> activityList) {
+		String output = "";
+		// write your code here
+		for (int i = 0; i < activityList.size(); i++) {
+			output += String.format("%-15s %-15s %-15s\n", activityList.get(i).getActivityName(),
+					activityList.get(i).getActivityDescription(), activityList.get(i).getActivityRequirement());
+		}
+		return output;
+	}
+
+	// delete activity
+	public static void deleteActivity(ArrayList<Activity> activityList) {
+		Helper.line(35, "=");
+		System.out.println("==== Delete Activity ====");
+		Helper.line(35, "=");
+		String removeCCA = Helper.readString("Enter Activity Name > ");
+
+		boolean ccaFound = false;
+		for (int i = 0; i < activityList.size(); i++) {
+			if (activityList.get(i).getActivityName().equalsIgnoreCase(removeCCA)) {
+				activityList.remove(i);
+				ccaFound = true;
+				break;
 			}
+		}
+
+		// If the user was found,display message
+		if (ccaFound == true) {
+			System.out.println("Resgistration has been removed successfully!");
+		} else {
+			System.out.println("There is no such user.");
+		}
+
 	}
-} // end line (admin)
+
+	// ================================= Option 4 Manage Registration (Admin)
+	// =================================
+	public static void manageRegistration(ArrayList<registration> registrationList) { // Rach
+		// enter code here
+		System.out.println();
+		Helper.line(45, "*");
+		System.out.println("***     MANAGE REGISTRATION     ***");
+		Helper.line(45, "*");
+
+		Scanner scanner = new Scanner(System.in);
+		int choice = 0;
+		while (choice != 3) {
+			System.out.println("1.View All registrations");
+			System.out.println("2.Delete an existing registration");
+			System.out.println("3.Exit");
+
+			System.out.println("Enter your choice: ");
+
+			choice = scanner.nextInt();
+
+			switch (choice) {
+			case 1:
+				viewAllRegistration(registrationList);
+				break;
+			case 2:
+				deleteRegistration(registrationList);
+				break;
+			default:
+				System.out.println("Logging out the system..");
+				;
+			}
+		}
+	}
+
+	// view all registrations
+	public static void viewAllRegistration(ArrayList<registration> registrationList) {
+		Helper.line(35, "=");
+		System.out.println("==== View All Registration ====");
+		Helper.line(35, "=");
+		String output = String.format("%-15s %-15s %-20s \n", "NAME", "USER ID", "ACTIVITY CHOSEN");
+		output += retrieveRegistration(registrationList);
+		System.out.println(output);
+
+	}
+
+	public static String retrieveRegistration(ArrayList<registration> registrationList) {
+		String output = "";
+		// write your code here
+		for (int i = 0; i < registrationList.size(); i++) {
+			output += String.format("%-15s %-15s %-20s \n", registrationList.get(i).getName(),
+					registrationList.get(i).getUserId(), registrationList.get(i).getCCAc());
+		}
+		return output;
+	}
+
+	// delete registration
+	public static void deleteRegistration(ArrayList<registration> registrationList) {
+		Helper.line(35, "=");
+		System.out.println("==== Delete Registration ====");
+		Helper.line(35, "=");
+		String removeUser = Helper.readString("Enter user Id to remove > ");
+		// Find the user to be deleted.
+		boolean userFound = false;
+		for (int i = 0; i < registrationList.size(); i++) {
+			if (registrationList.get(i).getUserId().equalsIgnoreCase(removeUser)) {
+				registrationList.remove(i);
+				userFound = true;
+				break;
+			}
+		}
+
+		// If the user was found,display message
+		if (userFound == true) {
+			System.out.println("Resgistration has been removed successfully!");
+		} else {
+			System.out.println("There is no such user.");
+		}
+
+		// exit
+		System.out.println("==== Registration Deleted ====");
+
+	}
+
+// end line (admin)
+//start line (teacher)
+
+//end line (teacher)
+//start line (student)
+	private static void studentMenu(ArrayList<registration> registrationList, ArrayList<Activity> activityList) {
+		System.out.println();
+		Helper.line(45, "*");
+		System.out.println("*****    STUDENT  MENU   *****");
+		Helper.line(45, "*");
+
+		Scanner scanner = new Scanner(System.in);
+		int choice = 0;
+		while (choice != 3) {
+			System.out.println("1.Apply for CCA");
+			System.out.println("2.View CCAs");
+			System.out.println("3.Logout");
+
+			System.out.println("Enter your choice: ");
+
+			choice = scanner.nextInt();
+
+			switch (choice) {
+			case 1:
+				registration newRegister = inputRegistration();
+				addRegistration(registrationList, newRegister);
+				break;
+			case 2:
+				viewCCA(activityList); // tebbie
+				break;
+			default:
+				System.out.println("Logging out...");
+				break;
+			}
+		}
+	}
+
+//a
+	// add registration
+	public static registration inputRegistration() {
+		String newStuName = Helper.readString("Enter your name > ");
+		String newStuID = Helper.readString("Enter your student ID > ");
+		String newEmail = Helper.readString("Enter Email > ");
+		String newAct = Helper.readString("Enter your chosen activity > ");
+
+		registration newR = new registration(newStuName, newStuID, newEmail, newAct);
+		return newR;
+	}
+
+	public static void addRegistration(ArrayList<registration> registrationList, registration newR) {
+		registration item;
+		for (int i = 0; i < registrationList.size(); i++) {
+			item = registrationList.get(i);
+			if (item.getUserId().equals(newR.getUserId()))
+				return;
+		}
+		if ((newR.getUserId().isEmpty()) || (newR.getName().isEmpty())) {
+			return;
+		}
+		registrationList.add(newR);
+		System.out.println("Registration added successfully!");
+	}
+
+	public static void viewCCA(ArrayList<Activity> activityList) {
+		System.out.println("==== View ALL ACTIVITIES ====");
+		String output = String.format("%-15s %-15s %-15s\n", "ACTIVITY", "DESCRIPTION", "REQUIREMENT");
+		output += retrieveCCA(activityList);
+		System.out.println(output);
+	}
+
+	public static String retrieveCCA(ArrayList<Activity> activityList) {
+		String output = "";
+		// write your code here
+		for (int i = 0; i < activityList.size(); i++) {
+			output += String.format("%-15s %-15s %-15s\n", activityList.get(i).getActivityName(),
+					activityList.get(i).getActivityDescription(), activityList.get(i).getActivityRequirement());
+		}
+		return output;
+	}
+}
+//endline (student)

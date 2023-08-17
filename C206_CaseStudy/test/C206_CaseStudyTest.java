@@ -177,7 +177,64 @@ public class C206_CaseStudyTest {
 	        C206_CaseStudy.dodeleteRegistration(registrationList, r1.getUserId());
 	        assertEquals("The registration list must still be empty", 0, registrationList.size());
 	    }
+	 //xinying
+	 @Test
+	 public void testAddActivity() {
 
+	  assertNotNull("Test if there is valid Activity arraylist to add to", activityList);
+	  assertEquals("Test that the Activity arraylist is empty.", 0, activityList.size());
+
+	  C206_CaseStudy.addActivity(activityList, a1);
+	  assertEquals("Test that the Activity arraylist size is 1.", 1, activityList.size());
+
+	  // Add an item
+	  C206_CaseStudy.addActivity(activityList, a2);
+	  assertEquals("Test that the Activity arraylist size is now 2.", 2, activityList.size());
+
+	  assertSame("Test that Activity is added to the end of the list.", a2, activityList.get(1));
+
+	  C206_CaseStudy.addActivity(activityList, a2);
+	  assertEquals("Test that the Activity arraylist size is unchange.", 2, activityList.size());
+
+	  
+	 }
+
+	 @Test
+	 public void testRetrieveAllActivities() {
+	  // fail("Not yet implemented");
+
+	  assertNotNull("Test if there is valid Activity arraylist to retrieve item from", activityList);
+
+	  String allActivities = C206_CaseStudy.retrieveActivity(activityList);
+	  String testOutput = "";
+	  assertEquals("Test that the retrieved activitylist is empty?", testOutput, allActivities);
+
+	  C206_CaseStudy.addActivity(activityList, a1);
+	  C206_CaseStudy.addActivity(activityList, a2);
+	  assertEquals("Test that Activity arraylist size is 2", 2, activityList.size());
+
+	  allActivities = C206_CaseStudy.retrieveActivity(activityList);
+	  testOutput = String.format("%-15s %-15s %-15s\n", "Badminton",
+	    "Badminton is a racket sport that is played by two or four players.", "Maximum capacity: 40");
+	  testOutput += String.format("%-15s %-15s %-15s\n", "Soccer",
+	    "Soccer is a team sport, involving 11 players on each side who use their legs, head and torso to pass a ball and score goals.",
+	    "Maximum capacity: 40");
+	  assertEquals("Test that ViewAllactivitylist", testOutput, allActivities);
+	 }
+
+	 @Test
+	 public void testDeleteActivity() {
+
+	  assertNotNull("Test if there is valid Activity arraylist to add to", activityList);
+	  assertEquals("Test that the Activity arraylist is empty.", 0, activityList.size());
+
+	  C206_CaseStudy.dodeleteActivity(activityList, a1.getActivityName());
+	  assertEquals("Test that the Activity arraylist size is 1.", 1, activityList.size());
+
+	  // Delete an item
+	  C206_CaseStudy.dodeleteActivity(activityList, a2.getActivityName());
+	  assertEquals("Test that the Activity arr",2,activityList.size());
+	 }
 	@After
 	public void tearDown() throws Exception {
 		u1 =null;

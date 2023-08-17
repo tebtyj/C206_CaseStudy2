@@ -342,107 +342,130 @@ public class C206_CaseStudy {
 	// ================================= Option 3 Manage Activites (Admin)
 	// =================================
 	public static void manageActivities(ArrayList<Activity> activityList) { // xinying
-		// enter code here
-		System.out.println();
-		Helper.line(45, "*");
-		System.out.println("*     MANAGE ACTIVITIES     *");
-		Helper.line(45, "*");
-		int choice = 0;
-		while (choice != 4) {
-			System.out.println("1.Add an activity");
-			System.out.println("2.View All activities");
-			System.out.println("3.Delete an existing activity");
-			System.out.println("4.Exit");
+		  // enter code here
+		  System.out.println();
+		  Helper.line(45, "*");
+		  System.out.println("*     MANAGE ACTIVITIES     *");
+		  Helper.line(45, "*");
+		  int choice = 0;
+		  while (choice != 4) {
+		   System.out.println("1.Add an activity");
+		   System.out.println("2.View All activities");
+		   System.out.println("3.Delete an existing activity");
+		   System.out.println("4.Exit");
 
-			choice = Helper.readInt("Enter your choice: ");
+		   choice = Helper.readInt("Enter your choice: ");
 
-			switch (choice) {
-			case 1:
-				Activity newActivity = inputActivity();
-				addActivity(activityList, newActivity);
-				break;
-			case 2:
-				viewAllActivities(activityList);
-				break;
-			case 3:
-				deleteActivity(activityList);
-				break;
-			default:
-				System.out.println("Logging out the system..");
-				;
-			}
-		}
-	}
+		   switch (choice) {
+		   case 1:
+		    Activity newActivity = inputActivity();
+		    addActivity(activityList, newActivity);
+		    break;
+		   case 2:
+		    viewAllActivities(activityList);
+		    break;
+		   case 3:
+		    deleteActivity(activityList);
+		    break;
+		   default:
+		    System.out.println("Logging out the system..");
+		    ;
+		   }
+		  }
+		 }
 
-	public static Activity inputActivity() {
-		Helper.line(35, "=");
-		System.out.println("==== Add Activity ====");
-		Helper.line(35, "=");
-		String activityName = Helper.readString("Enter Activity Name > ");
-		String activityDescription = Helper.readString("Enter Activity Description > ");
-		String activityRequirement = Helper.readString("Enter Activity Requirement > ");
+		 public static Activity inputActivity() {
+		  Helper.line(35, "=");
+		  System.out.println("==== Add Activity ====");
+		  Helper.line(35, "=");
+		  String activityName = Helper.readString("Enter Activity Name > ");
+		  String activityDescription = Helper.readString("Enter Activity Description > ");
+		  String activityRequirement = Helper.readString("Enter Activity Requirement > ");
 
-		Activity newA = new Activity(activityName, activityDescription, activityRequirement);
-		return newA;
-	}
+		  Activity newA = new Activity(activityName, activityDescription, activityRequirement);
+		  return newA;
+		 }
 
-	// add activity
-	public static void addActivity(ArrayList<Activity> activityList, Activity newA) {
-		Activity item;
-		for (int i = 0; i < activityList.size(); i++) {
-			item = activityList.get(i);
-			if (item.getActivityName().equals(newA.getActivityName()))
-				return;
-		}
-		if ((newA.getActivityRequirement().isEmpty()) || (newA.getActivityName().isEmpty())) {
-			return;
-		}
-		activityList.add(newA);
-		System.out.println("Registration added successfully!");
-	}
+		 // add activity
+		 public static void addActivity(ArrayList<Activity> activityList, Activity newA) {
+		  Activity item;
+		  for (int i = 0; i < activityList.size(); i++) {
+		   item = activityList.get(i);
+		   if (item.getActivityName().equals(newA.getActivityName()))
+		    return;
+		  }
+		  if ((newA.getActivityRequirement().isEmpty()) || (newA.getActivityName().isEmpty())) {
+		   return;
+		  }
+		  activityList.add(newA);
+		  System.out.println("Activity successfully created");
+		 }
 
-	// view all activities
-	public static void viewAllActivities(ArrayList<Activity> activityList) {
-		System.out.println("==== View ALL ACTIVITIES ====");
-		String output = String.format("%-15s %-15s %-15s\n", "ACTIVITY", "DESCRIPTION", "REQUIREMENT");
-		output += retrieveActivity(activityList);
-		System.out.println(output);
-	}
+		 // view all activities
+		 public static void viewAllActivities(ArrayList<Activity> activityList) {
+		  System.out.println("==== View ALL ACTIVITIES ====");
+		  String output = String.format("%-15s %-15s %-15s\n", "ACTIVITY", "DESCRIPTION", "REQUIREMENT");
+		  output += retrieveActivity(activityList);
+		  System.out.println(output);
+		 }
 
-	public static String retrieveActivity(ArrayList<Activity> activityList) {
-		String output = "";
-		// write your code here
-		for (int i = 0; i < activityList.size(); i++) {
-			output += String.format("%-15s %-15s %-15s\n", activityList.get(i).getActivityName(),
-					activityList.get(i).getActivityDescription(), activityList.get(i).getActivityRequirement());
-		}
-		return output;
-	}
+		 public static String retrieveActivity(ArrayList<Activity> activityList) {
+		  String output = "";
+		  // write your code here
+		  for (int i = 0; i < activityList.size(); i++) {
+		   output += String.format("%-15s %-15s %-15s\n", activityList.get(i).getActivityName(),
+		     activityList.get(i).getActivityDescription(), activityList.get(i).getActivityRequirement());
+		  }
+		  return output;
+		 }
 
-	// delete activity
-	public static void deleteActivity(ArrayList<Activity> activityList) {
-		Helper.line(35, "=");
-		System.out.println("==== Delete Activity ====");
-		Helper.line(35, "=");
-		String removeCCA = Helper.readString("Enter Activity Name > ");
+		 // delete activity
+		 public static void deleteActivity(ArrayList<Activity> activityList) {
+		  Helper.line(35, "=");
+		  System.out.println("==== Delete Activity ====");
+		  Helper.line(35, "=");
+		  String removeCCA = Helper.readString("Enter Activity Name > ");
 
-		boolean ccaFound = false;
-		for (int i = 0; i < activityList.size(); i++) {
-			if (activityList.get(i).getActivityName().equalsIgnoreCase(removeCCA)) {
-				activityList.remove(i);
-				ccaFound = true;
-				break;
-			}
-		}
+		  boolean ccaFound = false;
+		  for (int i = 0; i < activityList.size(); i++) {
+		   if (activityList.get(i).getActivityName().equalsIgnoreCase(removeCCA)) {
+		    activityList.remove(i);
+		    ccaFound = true;
+		    break;
+		   }
+		  }
 
-		// If the user was found,display message
-		if (ccaFound == true) {
-			System.out.println("Resgistration has been removed successfully!");
-		} else {
-			System.out.println("There is no such user.");
-		}
+		  // If the user was found,display message
+		  if (ccaFound == true) {
+		   System.out.println("Activity successfully deleted");
+		  } else {
+		   System.out.println("There is no such activity.");
+		  }
 
-	}
+		 }
+		 public static void dodeleteActivity(ArrayList<Activity> activityList,String activityName) {
+			  Helper.line(35, "=");
+			  System.out.println("==== Delete Activity ====");
+			  Helper.line(35, "=");
+			  String removeCCA = Helper.readString("Enter Activity Name > ");
+
+			  boolean ccaFound = false;
+			  for (int i = 0; i < activityList.size(); i++) {
+			   if (activityList.get(i).getActivityName().equalsIgnoreCase(removeCCA)) {
+			    activityList.remove(i);
+			    ccaFound = true;
+			    break;
+			   }
+			  }
+
+			  // If the user was found,display message
+			  if (ccaFound == true) {
+			   System.out.println("Activity successfully deleted");
+			  } else {
+			   System.out.println("There is no such activity.");
+			  }
+
+			 }
 
 	// ================================= Option 4 Manage Registration (Admin)
 	// =================================

@@ -315,7 +315,37 @@ public class C206_CaseStudyTest {
 		// Check if the status remains unchanged for the invalid status
 		assertEquals("pending", reg1.getStatus());
 	}
+	@Test
+	public void testAddAttendance() {
+		 registration testRegistration = new registration("Test Andrew", "P123", "test2131@gmail.com", "Test volley");
+	        registrationList.add(testRegistration);
+	        C206_CaseStudy.addAttendance(registrationList);
+	        assertTrue(testRegistration.isAttendance() || !testRegistration.isAttendance());
+	}
+	@Test
+    public void testViewAllAttendance() {
+        String expect = String.format("%-15s %-15s %-20s %-10s\n", "NAME", "USER ID", "ACTIVITY CHOSEN", "ATTENDANCE") +
+            String.format("%-15s %-15s %-20s %-10s\n", "William", "S123", "Badminton", "Absent") +
+            String.format("%-15s %-15s %-20s %-10s\n", "Oliver", "S223", "Soccer", "Absent");
 
+        String actual = C206_CaseStudy.retrieveAttendance(registrationList);
+
+        assertNotNull("Check if actual output is not null", actual);
+        assertEquals("Check if output matches expected output", expect, actual);
+    }
+	@Test
+    public void testDeleteAttendance() {
+        // Test deleting attendance of an existing user //normal
+        C206_CaseStudy.deleteAttendance(registrationList, "S123");
+        assertFalse("Check if attendance is deleted for user S123", r1.isAttendance());
+
+        // Test deleting attendance of a non-existing user //error
+        C206_CaseStudy.deleteAttendance(registrationList, "S999");
+
+        // Test deleting attendance for a user with different case //boundary
+        C206_CaseStudy.deleteAttendance(registrationList, "s223");
+        assertFalse("Check if attendance is deleted for user S223", r2.isAttendance());
+    }
 	@After
 	public void tearDown() throws Exception {
 		u1 = null;

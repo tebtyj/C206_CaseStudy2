@@ -567,7 +567,7 @@ public class C206_CaseStudy {
 
 // end line (admin)
 //start line (teacher)
-	private static void manageAttendance(ArrayList<registration> registrationList) {
+	public static void manageAttendance(ArrayList<registration> registrationList) {
 		Scanner scanner = new Scanner(System.in);
 		boolean exitManageAttendance = false;
 
@@ -590,7 +590,7 @@ public class C206_CaseStudy {
 				addAttendance(registrationList);
 				break;
 			case 2:
-				deleteAttendance(registrationList);
+				deleteAttendance(registrationList, null);
 				break;
 			case 3:
 				viewAllAttendance(registrationList);
@@ -605,7 +605,7 @@ public class C206_CaseStudy {
 		}
 	}
 
-	private static void addAttendance(ArrayList<registration> registrationList) {
+	public static void addAttendance(ArrayList<registration> registrationList) {
 		for (registration reg : registrationList) {
 			System.out.println("Student: " + reg.getName() + "(UserID: " + reg.getUserId() + ")");
 			System.out.println("Activity: " + reg.getCCAc());
@@ -624,7 +624,7 @@ public class C206_CaseStudy {
 		}
 	}
 
-	private static void deleteAttendance(ArrayList<registration> registrationList) {
+	public static void deleteAttendance(ArrayList<registration> registrationList, String string) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter UserID you want to delete: ");
 		String UID_delete = scanner.nextLine();

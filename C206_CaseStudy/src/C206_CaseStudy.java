@@ -112,10 +112,13 @@ public class C206_CaseStudy {
 					&& user.getRole().equalsIgnoreCase("teacher")) {
 				System.out.println("\nWelcome," + username + "\n");
 				teacherMenu(registrationList, activityList);
+				break;
+			} else {
+					System.out.println("Wrong password/username. PLease try again. \n");
+				}
 
 			}
 		}
-	}
 
 	private static void teacherMenu(ArrayList<registration> registrationList, ArrayList<Activity> activityList) {
 		System.out.println();

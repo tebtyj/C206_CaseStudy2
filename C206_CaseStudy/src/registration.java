@@ -4,12 +4,16 @@ public class registration {
 	String userId;
 	String email;
 	String CCAc;
+	String status;
+	boolean attendance;
 	
 	public registration(String name, String userId, String email,String CCAc) {
 		this.name=name;
 		this.userId=userId;
 		this.email=email;
 		this.CCAc=CCAc;
+		this.status = "pending";
+		this.attendance = false;
 	}
 	
 	public String getName() {
@@ -29,6 +33,12 @@ public class registration {
 		
 	}public void setEmail(String email) {
 		this.email=email;
+	}
+	public boolean isAttendance() {
+		return attendance;
+	}
+	public void setAttendance(boolean present) {
+		this.attendance = present;
 	}
 
 }

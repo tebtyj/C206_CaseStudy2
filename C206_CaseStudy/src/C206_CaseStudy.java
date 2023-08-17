@@ -128,10 +128,11 @@ public class C206_CaseStudy {
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
-		while (choice != 3) {
+		while (choice != 4) {
 			System.out.println("1.Manage Activities");
 			System.out.println("2.Manage Registration");
-			System.out.println("3.Logout");
+			System.out.println("3.Manage Attendance");
+			System.out.println("4.Logout");
 
 			System.out.println("Enter your choice: ");
 
@@ -145,7 +146,13 @@ public class C206_CaseStudy {
 				manageRegistration(registrationList); // rach
 				break;
 			case 3:
+				manageAttendance(registrationList); //kokzhen
+				break;
+			case 4:
 				System.out.println("Logging out the system");
+				break;
+			default:
+				System.out.println("Invalid choice");
 				break;
 			}
 		}
@@ -581,7 +588,99 @@ public class C206_CaseStudy {
 
 // end line (admin)
 //start line (teacher)
+	private static void manageAttendance(ArrayList<registration> registrationList) {
+	    Scanner scanner = new Scanner(System.in);
+	    boolean exitManageAttendance = false;
 
+	    while (!exitManageAttendance) {
+	        System.out.println();
+	        Helper.line(45, "*");
+	        System.out.println("======= Manage Attendance =======");
+	        System.out.println();
+	        Helper.line(45, "*");
+
+	        System.out.println("1. Mark Attendance");
+	        System.out.println("2. Delete Attendance");
+	        System.out.println("3. View all Attendance");
+	        System.out.println("4. Back to Teacher Menu");
+
+	        int option = Helper.readInt("Enter your option: ");
+
+	        switch (option) {
+	            case 1:
+	                addAttendance(registrationList);
+	                break;
+	            case 2:
+	                deleteAttendance(registrationList);
+	                break;
+	            case 3:
+	                viewAllAttendance(registrationList);
+	                break;
+	            case 4:
+	                exitManageAttendance = true;
+	                break;
+	            default:
+	                System.out.println("Invalid option");
+	                break;
+	        }
+	    }
+	}
+	private static void addAttendance(ArrayList<registration> registrationList) {
+		for (registration reg : registrationList) {
+			System.out.println("Student: " + reg.getName() + "(UserID: " + reg.getUserId() + ")");
+			System.out.println("Activity: " + reg.getCCAc());
+			
+			String attendance = Helper.readString("Present or absent (P/A): ");
+			
+			if (attendance.equalsIgnoreCase("P")) {
+				reg.setAttendance(true);
+				System.out.println("\n Attendance marked as Present (P) \n");
+			}else if (attendance.equalsIgnoreCase("A")) {
+				reg.setAttendance(false);
+				System.out.println("\n Attendance marked as Absent (A) \n");
+			}else {
+				System.out.println("\n Invalid Input, Enter 'P' or 'A' to mark \n");
+			}
+		}
+	}
+	private static void deleteAttendance(ArrayList<registration> registrationList) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter UserID you want to delete: ");
+		String UID_delete = scanner.nextLine();
+		
+		boolean UID_found = false;
+		for (registration reg : registrationList) {
+	        if (reg.getUserId().equalsIgnoreCase(UID_delete)) {
+	            reg.setAttendance(false);
+	            System.out.println("Attendance for " + reg.getName() + " has been deleted.");
+	            UID_found = true;
+	            break;
+	        }
+	    }
+		
+		if (!UID_found) {
+			System.out.println("UserID " + UID_delete + "not found");
+		}
+	}
+	public static void viewAllAttendance(ArrayList<registration> registrationList) {
+	    System.out.println("\n==== View All Attendance ====");
+	    String output = String.format("%-15s %-15s %-20s %-10s\n", "NAME", "USER ID", "ACTIVITY CHOSEN", "ATTENDANCE");
+	    output += retrieveAttendance(registrationList);
+	    System.out.println(output);
+	}
+	public static String retrieveAttendance(ArrayList<registration> registrationList) {
+	    String output = "";
+	    for (registration reg : registrationList) {
+	        String attendanceStatus;
+	        if (reg.isAttendance()) {
+	            attendanceStatus = "Present";
+	        } else {
+	            attendanceStatus = "Absent";
+	        }
+	        output += String.format("%-15s %-15s %-20s %-10s\n", reg.getName(), reg.getUserId(), reg.getCCAc(), attendanceStatus);
+	    }
+	    return output;
+	}
 //end line (teacher)
 //start line (student)
 	private static void studentMenu(ArrayList<registration> registrationList, ArrayList<Activity> activityList) {

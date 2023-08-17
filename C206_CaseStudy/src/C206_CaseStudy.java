@@ -235,7 +235,8 @@ public class C206_CaseStudy {
 
 			switch (choice) {
 			case 1:
-				addUser(userList);
+				User newUser = inputUser();
+				addUser(userList, newUser);
 				break;
 			case 2:
 				viewAllUser(userList);
@@ -252,9 +253,7 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-
-	public static void addUser(ArrayList<User> userList) {
-
+	public static User inputUser() {
 		System.out.println("==== Add User ====");
 		String entUsername = Helper.readString("Enter username > ");
 		String entId = Helper.readString("Enter user Id > ");
@@ -262,21 +261,21 @@ public class C206_CaseStudy {
 		String entEmail = Helper.readString("Enter Email > ");
 		String entRole = Helper.readString("Enter user role > ");
 
-		boolean nameFound = false;
-		int listSize = userList.size();
-		for (int i = 0; i < listSize; i++) {
-			if (userList.get(i).getUsername().equalsIgnoreCase(entUsername)) {
-				nameFound = true;
-				System.out.println("*** User has already been added ***");
-			}
+		User newuser = new User(entId, entUsername, entEmail, entPass, entRole);
+		return newuser;
+	}
+	public static void addUser(ArrayList<User> userList,User newuser) {
+		User item;
+		for (int i = 0; i < userList.size(); i++) {
+			item = userList.get(i);
+			if (item.getUsername().equals(newuser.getUsername()))
+				return;
 		}
-
-		if (nameFound == false) {
-			User newuser = new User(entId, entUsername, entEmail, entPass, entRole);
-			userList.add(newuser);
-			newuser.display();
-			System.out.printf("*** User '%s' has been added! ***\n", entUsername);
+		if ((newuser.getUsername().isEmpty()) || (newuser.getPassword().isEmpty())) {
+			return;
 		}
+		userList.add(newuser);
+		System.out.println("User added successfully!");
 
 	}
 
@@ -316,7 +315,24 @@ public class C206_CaseStudy {
 			System.out.println("There is no such user.");
 		}
 	}
+	public static void dodeleteUser(ArrayList<User> userList, String userId) {
+	    // Find the user to be deleted
+	    int index = -1;
+	    for (int i = 0; i < userList.size(); i++) {
+	        if (userList.get(i).getUserId().equals(userId)) {
+	            index = i;
+	            break;
+	        }
+	    }
 
+	    // If the user was found, delete it
+	    if (index != -1) {
+	        userList.remove(index);
+	        System.out.println("User has been removed successfully!");
+	    } else {
+	        System.out.println("There is no such user.");
+	    }
+	}
 	// ================================= Option 2 Manage UserRoles (Admin)
 	// =================================
 	public static void manageUserRoles() { // tebbie
@@ -485,6 +501,32 @@ public class C206_CaseStudy {
 
 	// delete registration
 	public static void deleteRegistration(ArrayList<registration> registrationList) {
+		Helper.line(35, "=");
+		System.out.println("==== Delete Registration ====");
+		Helper.line(35, "=");
+		String removeUser = Helper.readString("Enter user Id to remove > ");
+		// Find the user to be deleted.
+		boolean userFound = false;
+		for (int i = 0; i < registrationList.size(); i++) {
+			if (registrationList.get(i).getUserId().equalsIgnoreCase(removeUser)) {
+				registrationList.remove(i);
+				userFound = true;
+				break;
+			}
+		}
+
+		// If the user was found,display message
+		if (userFound == true) {
+			System.out.println("Resgistration has been removed successfully!");
+		} else {
+			System.out.println("There is no such user.");
+		}
+
+		// exit
+		System.out.println("==== Registration Deleted ====");
+
+	}
+	public static void dodeleteRegistration(ArrayList<registration> registrationList,String userId) {
 		Helper.line(35, "=");
 		System.out.println("==== Delete Registration ====");
 		Helper.line(35, "=");

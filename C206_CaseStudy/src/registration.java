@@ -40,6 +40,12 @@ public class registration {
 	public void setAttendance(boolean present) {
 		this.attendance = present;
 	}
+	public String getStatus() {
+        return status;
+    }
+	public void setStatus(String status) {
+        this.status = status;
+    }
 
 }
 //a

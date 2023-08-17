@@ -336,14 +336,14 @@ public class C206_CaseStudyTest {
 	@Test
     public void testDeleteAttendance() {
         // Test deleting attendance of an existing user //normal
-        C206_CaseStudy.deleteAttendance(registrationList, "S123");
+        C206_CaseStudy.dodeleteAttendance(registrationList, "S123");
         assertFalse("Check if attendance is deleted for user S123", r1.isAttendance());
 
         // Test deleting attendance of a non-existing user //error
-        C206_CaseStudy.deleteAttendance(registrationList, "S999");
+        C206_CaseStudy.dodeleteAttendance(registrationList, "S999");
 
         // Test deleting attendance for a user with different case //boundary
-        C206_CaseStudy.deleteAttendance(registrationList, "s223");
+        C206_CaseStudy.dodeleteAttendance(registrationList, "s223");
         assertFalse("Check if attendance is deleted for user S223", r2.isAttendance());
     }
 	@After

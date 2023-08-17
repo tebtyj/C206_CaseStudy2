@@ -353,107 +353,111 @@ public class C206_CaseStudy {
 	// ================================= Option 3 Manage Activites (Admin)
 	// =================================
 	public static void manageActivities(ArrayList<Activity> activityList) { // xinying
-		  // enter code here
-		  System.out.println();
-		  Helper.line(45, "*");
-		  System.out.println("*     MANAGE ACTIVITIES     *");
-		  Helper.line(45, "*");
-		  int choice = 0;
-		  while (choice != 4) {
-		   System.out.println("1.Add an activity");
-		   System.out.println("2.View All activities");
-		   System.out.println("3.Delete an existing activity");
-		   System.out.println("4.Exit");
+		// enter code here
+		System.out.println();
+		Helper.line(45, "*");
+		System.out.println("*     MANAGE ACTIVITIES     *");
+		Helper.line(45, "*");
+		int choice = 0;
+		while (choice != 4) {
+			System.out.println("1.Add an activity");
+			System.out.println("2.View All activities");
+			System.out.println("3.Delete an existing activity");
+			System.out.println("4.Exit");
 
-		   choice = Helper.readInt("Enter your choice: ");
+			choice = Helper.readInt("Enter your choice: ");
 
-		   switch (choice) {
-		   case 1:
-		    Activity newActivity = inputActivity();
-		    addActivity(activityList, newActivity);
-		    break;
-		   case 2:
-		    viewAllActivities(activityList);
-		    break;
-		   case 3:
-		    Helper.line(35, "=");
-		    System.out.println("==== Delete Activity ====");
-		    Helper.line(35, "=");
-		    String removeCCA = Helper.readString("Enter Activity Name > ");
-		    dodeleteActivity(activityList,removeCCA);
-		    break;
-		   default:
-		    System.out.println("Logging out the system..");
-		    ;
-		   }
-		  }
-		 }
+			switch (choice) {
+			case 1:
+				Activity newActivity = inputActivity();
+				addActivity(activityList, newActivity);
+				break;
+			case 2:
+				viewAllActivities(activityList);
+				break;
+			case 3:
+				Helper.line(35, "=");
+				System.out.println("==== Delete Activity ====");
+				Helper.line(35, "=");
+				String removeCCA = Helper.readString("Enter Activity Name > ");
+				dodeleteActivity(activityList, removeCCA);
+				break;
+			default:
+				System.out.println("Logging out the system..");
+				;
+			}
+		}
+	}
 
 	public static Activity inputActivity() {
-		  Helper.line(35, "=");
-		  System.out.println("==== Add Activity ====");
-		  Helper.line(35, "=");
-		  String activityName = Helper.readString("Enter Activity Name > ");
-		  String activityDescription = Helper.readString("Enter Activity Description > ");
-		  String activityRequirement = Helper.readString("Enter Activity Requirement > ");
+		Helper.line(35, "=");
+		System.out.println("==== Add Activity ====");
+		Helper.line(35, "=");
+		String activityName = Helper.readString("Enter Activity Name > ");
+		String activityDescription = Helper.readString("Enter Activity Description > ");
+		String activityRequirement = Helper.readString("Enter Activity Requirement > ");
 
-		  Activity newA = new Activity(activityName, activityDescription, activityRequirement);
-		  return newA;
-		 }
+		Activity newA = new Activity(activityName, activityDescription, activityRequirement);
+		return newA;
+	}
 
 	// add activity
-	 public static void addActivity(ArrayList<Activity> activityList, Activity newA) {
-	  Activity activity;
-	  for (int i = 0; i < activityList.size(); i++) {
-	   activity = activityList.get(i);
-	   if (activity.getActivityName().equalsIgnoreCase(newA.getActivityName())) {
-	    return;
-	   }
-	   if ((newA.getActivityRequirement().isEmpty()) || (newA.getActivityName().isEmpty())) {
-	    return;
-	   }
-	  }
-	  activityList.add(newA);
-	  System.out.println("Activity successfully created");
-	 }
+	public static void addActivity(ArrayList<Activity> activityList, Activity newA) {
+		Activity activity;
+		for (int i = 0; i < activityList.size(); i++) {
+			activity = activityList.get(i);
+			if (activity.getActivityName().equalsIgnoreCase(newA.getActivityName())) {
+				return;
+			}
+			if ((newA.getActivityRequirement().isEmpty()) || (newA.getActivityName().isEmpty())) {
+				return;
+			}
+		}
+		activityList.add(newA);
+		System.out.println("Activity successfully created");
+	}
 
-	 // view all activities
-	 public static void viewAllActivities(ArrayList<Activity> activityList) {
-	  System.out.println("==== View ALL ACTIVITIES ====");
-	  String output = String.format("%-15s %-15s %-15s\n", "ACTIVITY", "DESCRIPTION", "REQUIREMENT");
-	  output += retrieveActivity(activityList);
-	  System.out.println(output);
-	 }
+	// view all activities
+	public static void viewAllActivities(ArrayList<Activity> activityList) {
+		System.out.println("==== View ALL ACTIVITIES ====");
+		String output = String.format("%-15s %-15s %-15s\n", "ACTIVITY", "DESCRIPTION", "REQUIREMENT");
+		output += retrieveActivity(activityList);
+		System.out.println(output);
+	}
 
-	 public static String retrieveActivity(ArrayList<Activity> activityList) {
-	  String output = "";
-	  // write your code here
-	  for (int i = 0; i < activityList.size(); i++) {
-	   output += String.format("%-15s %-15s %-15s\n", activityList.get(i).getActivityName(),
-	     activityList.get(i).getActivityDescription(), activityList.get(i).getActivityRequirement());
-	  }
-	  return output;
-	 }
+	public static String retrieveActivity(ArrayList<Activity> activityList) {
+		Activity activity;
+		String output = "";
+		// write your code here
+		for (int i = 0; i < activityList.size(); i++) {
+			activity = activityList.get(i);
+			output += String.format("%-15s %-15s %-15s\n", activity.getActivityName(),
+					activityList.get(i).getActivityDescription(), activity.getActivityRequirement());
+		}
+		return output;
+	}
 
-	 // delete activity
-	 public static void dodeleteActivity(ArrayList<Activity> activityList, String removeCCA) {
-	  boolean ccaFound = false;
-	  for (int i = 0; i < activityList.size(); i++) {
-	   if (activityList.get(i).getActivityName().equalsIgnoreCase(removeCCA)) {
-	    activityList.remove(i);
-	    ccaFound = true;
-	    break;
-	   }
-	  }
+	// delete activity
+	public static void dodeleteActivity(ArrayList<Activity> activityList, String removeCCA) {
+		Activity activity;
+		boolean ccaFound = false;
+		for (int i = 0; i < activityList.size(); i++) {
+			activity = activityList.get(i);
+			if (activity.getActivityName().equalsIgnoreCase(removeCCA)) {
+				activityList.remove(i);
+				ccaFound = true;
+				break;
+			}
+		}
 
-	  // If the user was found,display message
-	  if (ccaFound == true) {
-	   System.out.println("Activity successfully deleted");
-	  } else {
-	   System.out.println("There is no such activity.");
-	  }
+		// If the user was found,display message
+		if (ccaFound == true) {
+			System.out.println("Activity successfully deleted");
+		} else {
+			System.out.println("There is no such activity.");
+		}
 
-	 }
+	}
 
 	// ================================= Option 4 Manage Registration (Admin)
 	// =================================
@@ -693,54 +697,59 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-	public static void updateApplicationStatus(ArrayList<registration> registrationList, ArrayList<Activity> activityList) {
-	    Scanner scanner = new Scanner(System.in);
 
-	    System.out.print("Enter the applicant's name: ");
-	    String applicantName = scanner.nextLine();
-	    System.out.print("Enter the activity's name: ");
-	    String activityName = scanner.nextLine();
+	public static void updateApplicationStatus(ArrayList<registration> registrationList,
+			ArrayList<Activity> activityList) {
+		Scanner scanner = new Scanner(System.in);
 
-	    // Find the registration based on the applicant's name and activity's name
-	    registration selectedRegistration = findRegistrationByNameAndActivity(registrationList, applicantName, activityName);
+		System.out.print("Enter the applicant's name: ");
+		String applicantName = scanner.nextLine();
+		System.out.print("Enter the activity's name: ");
+		String activityName = scanner.nextLine();
 
-	    if (selectedRegistration != null) {
-	        // Prompt for new status (approve, reject, pending)
-	        System.out.print("Enter the new status (approve/reject): ");
-	        String newStatus = scanner.next();
+		// Find the registration based on the applicant's name and activity's name
+		registration selectedRegistration = findRegistrationByNameAndActivity(registrationList, applicantName,
+				activityName);
 
-	        // Update the status of the selected registration
-	        if (newStatus.equalsIgnoreCase("approve") || newStatus.equalsIgnoreCase("reject")) {
-	            selectedRegistration.setStatus(newStatus);
-	            System.out.println("Application status updated.");
-	        } else {
-	            System.out.println("Invalid status input. Application status remains as 'pending'.");
-	        }
+		if (selectedRegistration != null) {
+			// Prompt for new status (approve, reject, pending)
+			System.out.print("Enter the new status (approve/reject): ");
+			String newStatus = scanner.next();
 
-	        // Display applications
-	        displayApplicationsForActivity(registrationList, findActivityByName(activityList, activityName));
-	    } else {
-	        System.out.println("Application not found.");
-	    }
+			// Update the status of the selected registration
+			if (newStatus.equalsIgnoreCase("approve") || newStatus.equalsIgnoreCase("reject")) {
+				selectedRegistration.setStatus(newStatus);
+				System.out.println("Application status updated.");
+			} else {
+				System.out.println("Invalid status input. Application status remains as 'pending'.");
+			}
+
+			// Display applications
+			displayApplicationsForActivity(registrationList, findActivityByName(activityList, activityName));
+		} else {
+			System.out.println("Application not found.");
+		}
 	}
-    public static registration findRegistrationByNameAndActivity(ArrayList<registration> registrationList,
-            String applicantName, String activityName) {
-        for (registration reg : registrationList) {
-            if (reg.getName().equals(applicantName) && reg.getCCAc().equalsIgnoreCase(activityName)) {
-                return reg;
-            }
-        }
-        return null;
-    }
 
-    public static Activity findActivityByName(ArrayList<Activity> activityList, String name) {
-        for (Activity activity : activityList) {
-            if (activity.getActivityName().equals(name)) {
-                return activity;
-            }
-        }
-        return null;
-    }
+	public static registration findRegistrationByNameAndActivity(ArrayList<registration> registrationList,
+			String applicantName, String activityName) {
+		for (registration reg : registrationList) {
+			if (reg.getName().equals(applicantName) && reg.getCCAc().equalsIgnoreCase(activityName)) {
+				return reg;
+			}
+		}
+		return null;
+	}
+
+	public static Activity findActivityByName(ArrayList<Activity> activityList, String name) {
+		for (Activity activity : activityList) {
+			if (activity.getActivityName().equals(name)) {
+				return activity;
+			}
+		}
+		return null;
+	}
+
 //end line (teacher)
 //start line (student)
 	private static void studentMenu(ArrayList<registration> registrationList, ArrayList<Activity> activityList) {
